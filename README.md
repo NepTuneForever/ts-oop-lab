@@ -21,4 +21,4 @@ npx ts-node typescript-playground.ts
 
 ## Purpose
 
-This repository exists as a small academic study project focused on practicing TypeScript in a simple and direct way.
+This repository is a personal project built while I was in college, created to practice TypeScript in a simple and direct way.
