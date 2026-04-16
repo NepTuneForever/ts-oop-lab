@@ -1,24 +1,24 @@
 # TS OOP Lab
 
-Pequeno playground em TypeScript criado para praticar conceitos basicos de POO e interacao via terminal com Node.js.
+A small TypeScript playground built to practice basic OOP concepts and terminal interaction with Node.js.
 
-## O que tem aqui
+## What's Included
 
-- Classes em TypeScript
-- Encapsulamento com atributos privados
-- Metodos assincronos com `readline/promises`
-- Estrutura simples de simulacao em terminal
+- TypeScript classes
+- Encapsulation with private fields
+- Async methods using `readline/promises`
+- A simple terminal-based simulation structure
 
-## Arquivo principal
+## Main File
 
 - `typescript-playground.ts`
 
-## Como executar
+## How to Run
 
 ```bash
 npx ts-node typescript-playground.ts
 ```
 
-## Objetivo
+## Purpose
 
-Este repositorio existe como estudo e experimento academico, focado em praticar TypeScript de forma simples e direta.
+This repository exists as a small academic study project focused on practicing TypeScript in a simple and direct way.
