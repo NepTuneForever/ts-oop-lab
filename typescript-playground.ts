@@ -31,7 +31,7 @@ class Pessoa {
 
     async roubar(): Promise<void> {
         let resposta = await rl.question("Vai mesmo roubar na tora? [S/N] ");
-        if (resposta == "S") {
+        if (resposta.toLowerCase() == "s") {
             let num = Math.floor(Math.random() * 8) + 1;
             let num_azar = Math.floor(Math.random() * 8) + 1;
             
@@ -39,8 +39,8 @@ class Pessoa {
                 console.log("Infelizmente, você foi pego e foi preso");
                 this.serPreso();
             } else {
-                console.log(`você escapou por pouco! ${num} | ${num_azar} e saiu com ${num} reais!`);
-                this.dinheiroEmMao += num;
+                console.log(`você escapou por pouco! ${num} | ${num_azar} e saiu com ${num * (num**2 + num_azar)} reais!`);
+                this.dinheiroEmMao += num * (num**2 + num_azar);
             }
         } else {
             console.log("Muito bem!")
@@ -57,6 +57,16 @@ class ContaBancaria {
         this.pessoa = pessoa;
         this.saldo = 0;
         this.extrato = [];
+    }
+
+    adicionarExtrato(saldo: number): void {
+        this.saldo += saldo;
+        this.extrato.push(`Saldo atualizado: +${saldo}`);
+    }
+
+    removerExtrato(saldo: number): void {
+        this.saldo -= saldo;
+        this.extrato.push(`Saldo atualizado: -${saldo}`);
     }
     
     verExtrato(): void {
@@ -76,7 +86,7 @@ async function main() {
     var c = new ContaBancaria(p)
     
     while (true) {
-        var escolha = await rl.question("Bom dia Magnata, o que voce deseja fazer? \n1 - Roubar \n2 - Ver extrato \n3 - Sair \n")
+        var escolha = await rl.question("Bom dia Magnata, o que voce deseja fazer? \n1 - Roubar \n2 - Ver extrato \n3 - Trabalhar \n4 - Sair \n")
         switch (escolha) {
             case "1":
                 await p.roubar();
@@ -88,6 +98,8 @@ async function main() {
                 console.log("Até mais!")
                 rl.close();
                 return;
+            case "4":
+                
             default:
                 console.log("Opção inválida!")
         }
