@@ -3,6 +3,10 @@ import { stdin as input, stdout as output } from "node:process"
 
 const rl = readline.createInterface({ input, output })
 
+const addExtrato = (C: ContaBancaria, Num: number): void => {
+    C.adicionarExtrato(Num);
+};
+
 class Pessoa {
     dinheiroEmMao: number;
     private preso: boolean;
@@ -21,6 +25,12 @@ class Pessoa {
         this.preso = true;
     }
 
+    trabalhar(c: ContaBancaria): void {
+        const ganho = Math.floor(Math.random() * 10);
+        console.log(ganho);
+        c.adicionarExtrato(ganho);
+    }
+
     morrer(): void {
         console.log("Infelizmente, você morreu");
     }
@@ -29,7 +39,7 @@ class Pessoa {
         return this.preso;
     }
 
-    async roubar(): Promise<void> {
+    async roubar(c: ContaBancaria): Promise<void> {
         let resposta = await rl.question("Vai mesmo roubar na tora? [S/N] ");
         if (resposta.toLowerCase() == "s") {
             let num = Math.floor(Math.random() * 8) + 1;
@@ -41,6 +51,7 @@ class Pessoa {
             } else {
                 console.log(`você escapou por pouco! ${num} | ${num_azar} e saiu com ${num * (num**2 + num_azar)} reais!`);
                 this.dinheiroEmMao += num * (num**2 + num_azar);
+                addExtrato(c, num * (num**2 + num_azar));
             }
         } else {
             console.log("Muito bem!")
@@ -62,6 +73,7 @@ class ContaBancaria {
     adicionarExtrato(saldo: number): void {
         this.saldo += saldo;
         this.extrato.push(`Saldo atualizado: +${saldo}`);
+        console.log(this.extrato);
     }
 
     removerExtrato(saldo: number): void {
@@ -86,20 +98,24 @@ async function main() {
     var c = new ContaBancaria(p)
     
     while (true) {
-        var escolha = await rl.question("Bom dia Magnata, o que voce deseja fazer? \n1 - Roubar \n2 - Ver extrato \n3 - Trabalhar \n4 - Sair \n")
+        var escolha = (await rl.question("Bom dia Magnata, o que voce deseja fazer? \n1 - Roubar \n2 - Ver extrato \n3 - Trabalhar \n4 - Sair \n")).trim()
         switch (escolha) {
             case "1":
-                await p.roubar();
+                await p.roubar(c);
                 break;
             case "2":
+                console.log("Aqui está o seu extrato: ")
+                console.log("{\n")
                 c.verExtrato();
+                console.log("}")
                 break;
             case "3":
+                p.trabalhar(c);
+                break;
+            case "4":
                 console.log("Até mais!")
                 rl.close();
                 return;
-            case "4":
-                
             default:
                 console.log("Opção inválida!")
         }
